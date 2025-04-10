@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://cqjeqwuss8d82"]
+
+[ext_resource type="Texture2D" uid="uid://b5gydb2pyrnbt" path="res://assets/sprites/world_tileset.png" id="1_lhrtj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj0aa"]
+atlas = ExtResource("1_lhrtj")
+region = Rect2(176, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7v1e"]
+atlas = ExtResource("1_lhrtj")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh24h"]
+atlas = ExtResource("1_lhrtj")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pasrl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj0aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7v1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh24h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2o1l"]
+size = Vector2(16, 16)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rhyky"]
+b = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cudjk"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_46cei"]
+resource_name = "Disappear3"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:shape")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("SegmentShape2D_rhyky"), SubResource("RectangleShape2D_cudjk")]
+}
+
+[sub_resource type="Animation" id="Animation_vcvad"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:shape")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("RectangleShape2D_u2o1l")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j6bhg"]
+_data = {
+&"Disappear3": SubResource("Animation_46cei"),
+&"RESET": SubResource("Animation_vcvad")
+}
+
+[node name="Disappear3" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pasrl")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u2o1l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_j6bhg")
+}
+autoplay = "Disappear3"

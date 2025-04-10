@@ -6,4 +6,5 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	gamemanager.add_point()
+	print("Coin collected")
 	animation_player.play("pickup animation")

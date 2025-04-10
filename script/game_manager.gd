@@ -1,6 +1,7 @@
 extends Node
 
 var score = 0
+@onready var spawnpoint = $"../Player".position
 @onready var score_lable: Label = $ScoreLable
 
 func add_point():
